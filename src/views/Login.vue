@@ -61,8 +61,8 @@
             //_this.$router.replace('/table');
             this.logining = true;
             //NProgress.start();
-            //var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-             var loginParams = { phone: '15647854635', passwd: '123456' };
+            var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
+            //  var loginParams = { phone: '15647854635', passwd: '123456' };
             requestLogin(loginParams).then(data => {//请求验证账号密码
               this.logining = false;
               //NProgress.done()

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let base = '';
 //params参数=》loginParams（账号密码），返回格式 {msg ,code , user},${base}/项目名称
-// export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
+export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
 
 export const getUserList = params => { return axios.get(`${base}/user/list`, { params: params }); };
 
@@ -58,7 +58,7 @@ export const editVote = params => { return axios.get(`${base}/vote/voteedit`, { 
 
 export const addVote = params => { return axios.get(`${base}/vote/voteadd`, { params: params }); };
 
-export const requestLogin = params => { return axios.post(`http://172.31.72.53:8090/login/byPhone`, params).then(res => res.data); };
+// export const requestLogin = params => { return axios.post(`http://172.31.72.53:8090/login/byPhone`, params).then(res => res.data); };
 
 // http://172.31.72,53:8090/login/byPhone?phone=15647854635&passwd=123456
 
