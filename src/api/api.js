@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let base = '';
+let base = 'http://baidu.com';
 //params参数=》loginParams（账号密码），返回格式 {msg ,code , user},${base}/项目名称
 export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
 
