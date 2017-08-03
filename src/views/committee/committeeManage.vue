@@ -7,6 +7,11 @@
 					<el-input v-model="filters.name" placeholder="委员会名称"></el-input>
 				</el-form-item>
 				<el-form-item>
+					<el-select v-model="value1" placeholder="查询关键词">
+						<el-option v-for="item in options" :key="item.value"  :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
 					<el-button type="primary" v-on:click="getCommittees">查询</el-button>
 				</el-form-item>
 				<el-form-item>
@@ -160,32 +165,31 @@
 	export default {
 		data() {
 			return {
-                options: [{
-                    value: '政府',
-                    label: '政府'
-                }, {
-                    value: '业主立案团',
-                    label: '业主立案团'
-                }, {
-                    value: '业主委员会',
-                    label: '业主委员会'
-                }, {
-                    value: '互助委员会',
-                    label: '互助委员会'
-                }, {
-                    value: '物业管理公司',
-                    label: '物业管理公司'
-                },{
-                    value:'其他',
-                    label:'其他'
-                },{
-                    value:'无组织',
-                    label:'无组织'
-                },{
-                    value:'小组',
-                    label:'小组'
-                }],
-                value: '',
+				//多条件查询参数
+				options:[{
+					value:'name',
+					label:"委员会名称"
+				},{
+					value:"type",
+					label:"组织类型"
+				},{
+					value:"pid",
+					label:"父级组织"
+				},{
+					value:"flag",
+					label:"标记"
+				},{
+					value:'leader',
+					label:'主要领导'
+
+				},{
+					value:"available",
+					label:"可用性"
+				}],
+				value1:'name',
+				//end 多条件查询
+				value: '',
+				
                 options1:[{
                     value:'0',
                     label:'政府'
@@ -249,6 +253,7 @@
 		methods: {
 			getVotesNone:function(){
 			this.filters.name='';
+			this.value1='name',
 			this.getCommittees();
 			},
 			//性别显示转换
@@ -291,7 +296,8 @@
 			getCommittees() {
 				let para = {
 					page: this.page,
-					name: this.filters.name
+					name: this.filters.name,
+					value1:this.value1
 				};
 				this.listLoading = true;
 				//NProgress.start();

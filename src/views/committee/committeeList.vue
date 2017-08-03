@@ -7,6 +7,11 @@
 					<el-input v-model="filters.name" placeholder="委员会名称"></el-input>
 				</el-form-item>
 				<el-form-item>
+					<el-select v-model="value1" placeholder="查询关键词">
+						<el-option v-for="item in options" :key="item.value"  :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
 					<el-button type="primary"  v-on:click="getCommittee">查询</el-button>
 				</el-form-item>
 				<el-form-item>
@@ -48,6 +53,29 @@
 				filters: {
 					name: ''
 				},
+				//多条件查询参数
+				options:[{
+					value:'name',
+					label:"委员会名称"
+				},{
+					value:"type",
+					label:"组织类型"
+				},{
+					value:"pid",
+					label:"父级组织"
+				},{
+					value:"flag",
+					label:"标记"
+				},{
+					value:'leader',
+					label:'主要领导'
+
+				},{
+					value:"available",
+					label:"可用性"
+				}],
+				value1:'name',
+				//end 多条件查询
 				loading: false,
 				committees: [
 				]
@@ -56,6 +84,7 @@
 		methods: {
 			getVotesNone:function(){
 			this.filters.name='';
+			this.value1='name',
 			this.getCommittee();
 			},
 			formatAvailable: function (row, column) {
@@ -92,7 +121,8 @@
 			//获取委员会列表
 			getCommittee: function () {
 				let para = {
-					name: this.filters.name
+					name: this.filters.name,
+					value1:this.value1
 				};
 				this.loading = true;
 				//NProgress.start();

@@ -7,6 +7,11 @@
 					<el-input v-model="filters.name" placeholder="建筑名称"></el-input>
 				</el-form-item>
 				<el-form-item>
+					<el-select v-model="value" placeholder="查询关键词">
+						<el-option v-for="item in options" :key="item.value"  :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
 					<el-button type="primary" v-on:click="getBuildings">查询</el-button>
 				</el-form-item>
 				<el-form-item>
@@ -152,6 +157,25 @@
 				filters: {
 					name: ''
 				},
+				//多条件查询参数
+				options:[{
+					value:'building_name',
+					label:"名称"
+				},{
+					value:"layers",
+					label:"层数"
+				},{
+					value:"undergroup_layers",
+					label:"地库层数"
+				},{
+					value:"units_num",
+					label:"单元数目"
+				},{
+					value:"available",
+					label:"可用性"
+				}],
+				value:'building_name',
+				//end 多条件查询参数
                 users: [],
                 buildings:[],
 				total: 0,
@@ -205,8 +229,9 @@
 		},
 		methods: {
 			getVotesNone:function(){
-			this.filters.name='';
-			this.getBuildings();
+			this.filters.name='',
+			this.value='building_name',
+			this.getBuildings()
 			},
 			//性别显示转换
 			formatAvailable: function (row, column) {
@@ -220,7 +245,8 @@
 			getBuildings() {
 				let para = {
 					page: this.page,
-					building_name: this.filters.name
+					building_name: this.filters.name,
+					value:this.value
 				};
 				this.listLoading = true;
 				//NProgress.start();

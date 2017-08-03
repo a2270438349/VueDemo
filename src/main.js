@@ -13,12 +13,16 @@ import routes from './routes'
 import Mock from './mock'
 Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
+import axios from 'axios';
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
 //NProgress.configure({ showSpinner: false });
+
+axios.defaults.baseURL = require("./config/url.config").baseUrl;
+axios.defaults.withCredentials=true;
 
 const router = new VueRouter({
   routes

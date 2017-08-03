@@ -4,7 +4,12 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="用户名"></el-input>
+					<el-input v-model="filters.name" placeholder="请输入关键词"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="value" placeholder="查询关键词">
+						<el-option v-for="item in options" :key="item.value"  :label="item.label" :value="item.value"></el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getUsers">查询</el-button>
@@ -156,6 +161,25 @@
 				filters: {
 					name: ''
 				},
+				//多条件查询参数
+				options:[{
+					value:'name',
+					label:"用户名"
+				},{
+					value:"sex",
+					label:"性别"
+				},{
+					value:"phone",
+					label:"电话"
+				},{
+					value:"email",
+					label:"电子邮件"
+				},{
+					value:"available",
+					label:"可用性"
+				}],
+				value:'name',
+				//end 多条件查询参数
 				users: [],
 				total: 0,
 				page: 1,
@@ -207,12 +231,13 @@
 		methods: {
 			getVotesNone:function(){
 			this.filters.name='';
+			this.value='name';
 			this.getUsers();
 			},
-			//性别显示转换
 			formatAvailable: function (row, column) {
 				return row.available == 1 ? '是' : row.available == 0 ? '否' : '未知';
 			},
+			//性别显示转换
 			formatSex: function (row, column) {
 				return row.sex == 1 ? '男' : row.sex == 0 ? '女' : '未知';
 			},
@@ -224,12 +249,14 @@
 			getUsers() {
 				let para = {
 					page: this.page,
-					name: this.filters.name
+					name: this.filters.name,
+					value:this.value
 				};
 				this.listLoading = true;
 				//NProgress.start();
 				getUserListPage(para).then((res) => {
 					this.total = res.data.total;
+
 					this.users = res.data.users;
 					this.listLoading = false;
 					//NProgress.done();

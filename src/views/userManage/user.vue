@@ -7,6 +7,11 @@
 					<el-input v-model="filters.name" placeholder="姓名"></el-input>
 				</el-form-item>
 				<el-form-item>
+					<el-select v-model="value" placeholder="查询关键词">
+						<el-option v-for="item in options" :key="item.value"  :label="item.label" :value="item.value"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item>
 					<el-button type="primary" v-on:click="getUser">查询</el-button>
 				</el-form-item>
 				<el-form-item>
@@ -55,6 +60,25 @@
 				filters: {
 					name: ''
 				},
+				//多条件查询参数
+				options:[{
+					value:'name',
+					label:"用户名"
+				},{
+					value:"sex",
+					label:"性别"
+				},{
+					value:"phone",
+					label:"电话"
+				},{
+					value:"email",
+					label:"电子邮件"
+				},{
+					value:"available",
+					label:"可用性"
+				}],
+				value:'name',
+				//end 多条件查询参数
 				loading: false,
 				users: [
 				]
@@ -63,6 +87,7 @@
 		methods: {
 			getVotesNone:function(){
 			this.filters.name='';
+			this.value='name';
 			this.getUser();
 			},
 			//性别显示转换
@@ -75,7 +100,8 @@
 			//获取用户列表
 			getUser: function () {
 				let para = {
-					name: this.filters.name
+					name: this.filters.name,
+					value:this.value
 				};
 				this.loading = true;
 				//NProgress.start();

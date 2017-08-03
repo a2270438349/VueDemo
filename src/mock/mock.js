@@ -51,11 +51,72 @@ export default {
 
     //获取用户列表
     mock.onGet('/user/list').reply(config => {
-      let {name} = config.params;
-      let mockUsers = _Users.filter(user => {
+      let {name,value} = config.params;
+      //多条件查询
+      let mockUsers;
+      if(value=='name'){
+        mockUsers= _Users.filter(user => {
         if (name && user.name.indexOf(name) == -1) return false;
         return true;
-      });
+        });
+      }
+      else if(value=='sex'){
+        if(name=='男'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.sex.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(name=='女'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.sex.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockUsers= _Users.filter(user => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else if(value=='phone'){
+        mockUsers= _Users.filter(user => {
+        if (name && user.phone.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='email'){
+        mockUsers= _Users.filter(user => {
+        if (name && user.email.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='available'){
+        if(name=='是'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.available.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(name=='否'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.available.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockUsers= _Users.filter(user => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
@@ -67,11 +128,74 @@ export default {
 
     //获取用户列表（分页）
     mock.onGet('/user/listpage').reply(config => {//config是提交的表单
-      let {page, name} = config.params;
-      let mockUsers = _Users.filter(user => {
+
+      let {page, name ,value} = config.params;
+      //多条件查询
+      let mockUsers;
+      if(value=='name'){
+        mockUsers= _Users.filter(user => {
         if (name && user.name.indexOf(name) == -1) return false;
         return true;
-      });
+        });
+      }
+      else if(value=='sex'){
+        if(name=='男'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.sex.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(name=='女'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.sex.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockUsers= _Users.filter(user => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else if(value=='phone'){
+        mockUsers= _Users.filter(user => {
+        if (name && user.phone.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='email'){
+        mockUsers= _Users.filter(user => {
+        if (name && user.email.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='available'){
+        if(name=='是'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.available.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(name=='否'){
+          mockUsers= _Users.filter(user => {
+            if (name && user.available.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockUsers= _Users.filter(user => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
+
       let total = mockUsers.length;
       mockUsers = mockUsers.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
       return new Promise((resolve, reject) => {
@@ -162,11 +286,59 @@ export default {
 
     //获取建筑列表（分页）
     mock.onGet('/building/buildinglistpage').reply(config => {//config是提交的表单
-      let {page, building_name} = config.params;
-      let mockBuildings = _Buildings.filter(building => {
+
+      let {page, building_name,value} = config.params;
+      //多条件查询
+      let mockBuildings;
+      if(value=='building_name'){
+        mockBuildings= _Buildings.filter(building => {
         if (building_name && building.building_name.indexOf(building_name) == -1) return false;
         return true;
-      });
+        });
+      }
+      
+      else if(value=='layers'){
+        mockBuildings= _Buildings.filter(building => {
+        if (building_name && building.layers.indexOf(' '+building_name+' ') == -1) return false;//加空格后缀避免只有部分匹配
+        return true;
+        });
+      }
+      else if(value=='undergroup_layers'){
+        mockBuildings= _Buildings.filter(building => {
+        if (building_name && building.undergroup_layers.indexOf(' '+building_name+' ') == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='units_num'){
+        mockBuildings= _Buildings.filter(building => {
+        if (building_name && building.units_num.indexOf(' '+building_name+' ') == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='available'){
+        if(building_name=='是'){
+          mockBuildings= _Buildings.filter(building => {
+            if (building_name && building.available.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(building_name=='否'){
+          mockBuildings= _Buildings.filter(building => {
+            if (building_name && building.available.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockBuildings= _Buildings.filter(building => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
       let total = mockBuildings.length;
       mockBuildings = mockBuildings.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
       return new Promise((resolve, reject) => {
@@ -180,11 +352,58 @@ export default {
     });
 
     mock.onGet('/building/buildinglist').reply(config => {
-      let {building_name} = config.params;
-      let mockBuildings = _Buildings.filter(building => {
+      let {building_name,value} = config.params;
+      //多条件查询
+      let mockBuildings;
+      if(value=='building_name'){
+        mockBuildings= _Buildings.filter(building => {
         if (building_name && building.building_name.indexOf(building_name) == -1) return false;
         return true;
-      });
+        });
+      }
+      
+      else if(value=='layers'){
+        mockBuildings= _Buildings.filter(building => {
+        if (building_name && building.layers.indexOf(' '+building_name+' ') == -1) return false;//加空格后缀避免只有部分匹配
+        return true;
+        });
+      }
+      else if(value=='undergroup_layers'){
+        mockBuildings= _Buildings.filter(building => {
+        if (building_name && building.undergroup_layers.indexOf(' '+building_name+' ') == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='units_num'){
+        mockBuildings= _Buildings.filter(building => {
+        if (building_name && building.units_num.indexOf(' '+building_name+' ') == -1) return false;
+        return true;
+        });
+      }
+      else if(value=='available'){
+        if(building_name=='是'){
+          mockBuildings= _Buildings.filter(building => {
+            if (building_name && building.available.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(building_name=='否'){
+          mockBuildings= _Buildings.filter(building => {
+            if (building_name && building.available.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockBuildings= _Buildings.filter(building => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
@@ -279,11 +498,70 @@ export default {
 
     //获取委员会列表（分页）
     mock.onGet('/committee/committeelistpage').reply(config => {//config是提交的表单
-      let {page, name} = config.params;
-      let mockCommittees = _Committees.filter(committee => {
+      let {page, name,value1} = config.params;
+      
+      //多条件查询
+      let mockCommittees;
+      if(value1=='name'){
+        mockCommittees= _Committees.filter(committee => {
         if (name && committee.name.indexOf(name) == -1) return false;
         return true;
-      });
+        });
+      }
+      
+      else if(value1=='type'){
+        if(name=='政府'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(0) == -1) return false;return true;});}
+        else if(name=='业主立案团'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(1) == -1) return false;return true;});}
+        else if(name=='业主委员会'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(2) == -1) return false;return true;});}
+        else if(name=='互助委员会'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(3) == -1) return false;return true;});}
+        else if(name=='物业管理公司'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(4) == -1) return false;return true;});}
+        else if(name=='其他'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(5) == -1) return false;return true;});}
+        else if(name=='无组织'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(6) == -1) return false;return true;});}
+        else if(name=='小组'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(7) == -1) return false;return true;});}
+        else {mockCommittees= _Committees.filter(committee => { return false;});}
+      }
+      else if(value1=='pid'){
+        mockCommittees= _Committees.filter(committee => {
+        if (name && committee.pid.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value1=='flag'){
+        if(name=='政府'){mockCommittees= _Committees.filter(committee => {if (name && committee.flag.indexOf(0) == -1) return false;return true;});}
+        else if(name=='委员会'){mockCommittees= _Committees.filter(committee => {if (name && committee.flag.indexOf(1) == -1) return false;return true;});}
+        else if(name=='小组'){mockCommittees= _Committees.filter(committee => {if (name && committee.flag.indexOf(2) == -1) return false;return true;});}
+        else {mockCommittees= _Committees.filter(committee => { return false;});}
+      }
+       else if(value1=='leader'){
+        mockCommittees= _Committees.filter(committee => {
+        if (name && committee.leader.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value1=='available'){
+        if(name=='是'){
+          mockCommittees= _Committees.filter(committee => {
+            if (name && committee.available.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(name=='否'){
+          mockCommittees= _Committees.filter(committee => {
+            if (name && committee.available.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockCommittees= _Committees.filter(committee => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
       let total = mockCommittees.length;
       mockCommittees = mockCommittees.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
       return new Promise((resolve, reject) => {
@@ -297,11 +575,69 @@ export default {
     });
 
     mock.onGet('/committee/committeelist').reply(config => {
-      let {name} = config.params;
-      let mockCommittees = _Committees.filter(committee => {
+      let {name,value1} = config.params;
+      //多条件查询
+      let mockCommittees;
+      if(value1=='name'){
+        mockCommittees= _Committees.filter(committee => {
         if (name && committee.name.indexOf(name) == -1) return false;
         return true;
-      });
+        });
+      }
+      
+      else if(value1=='type'){
+        if(name=='政府'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(0) == -1) return false;return true;});}
+        else if(name=='业主立案团'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(1) == -1) return false;return true;});}
+        else if(name=='业主委员会'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(2) == -1) return false;return true;});}
+        else if(name=='互助委员会'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(3) == -1) return false;return true;});}
+        else if(name=='物业管理公司'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(4) == -1) return false;return true;});}
+        else if(name=='其他'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(5) == -1) return false;return true;});}
+        else if(name=='无组织'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(6) == -1) return false;return true;});}
+        else if(name=='小组'){mockCommittees= _Committees.filter(committee => {if (name && committee.type.indexOf(7) == -1) return false;return true;});}
+        else {mockCommittees= _Committees.filter(committee => { return false;});}
+      }
+      else if(value1=='pid'){
+        mockCommittees= _Committees.filter(committee => {
+        if (name && committee.pid.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value1=='flag'){
+        if(name=='政府'){mockCommittees= _Committees.filter(committee => {if (name && committee.flag.indexOf(0) == -1) return false;return true;});}
+        else if(name=='委员会'){mockCommittees= _Committees.filter(committee => {if (name && committee.flag.indexOf(1) == -1) return false;return true;});}
+        else if(name=='小组'){mockCommittees= _Committees.filter(committee => {if (name && committee.flag.indexOf(2) == -1) return false;return true;});}
+        else {mockCommittees= _Committees.filter(committee => { return false;});}
+      }
+       else if(value1=='leader'){
+        mockCommittees= _Committees.filter(committee => {
+        if (name && committee.leader.indexOf(name) == -1) return false;
+        return true;
+        });
+      }
+      else if(value1=='available'){
+        if(name=='是'){
+          mockCommittees= _Committees.filter(committee => {
+            if (name && committee.available.indexOf(1) == -1) return false;
+            return true;
+          });
+        }
+        else if(name=='否'){
+          mockCommittees= _Committees.filter(committee => {
+            if (name && committee.available.indexOf(0) == -1) return false;
+            return true;
+          });
+        }
+        else {
+          mockCommittees= _Committees.filter(committee => {
+            // if (name && user.sex.indexOf(1) == -1) return false;
+            // return true;
+            return false;
+          });
+        }
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {
@@ -392,11 +728,29 @@ export default {
     //以下为投票导航页拦截的处理
     //获取投票分页
     mock.onGet('/vote/votelistpage').reply(config => {//config是提交的表单
-      let {page, attribute} = config.params;
+      let {page, attribute,value} = config.params;
       let mockVotes = _Votes.filter(vote => {
         if (attribute && vote.attribute.indexOf(attribute) == -1) return false;
         return true;
       });
+      //多条件查询
+      let mockBuildings;
+      if(value=='name'){
+        mockVotes= _Votes.filter(vote => {
+        if (attribute && vote.name.indexOf(attribute) == -1) return false;
+        return true;
+        });
+      }
+      
+      else if(value=='attribute'){
+        mockVotes= _Votes.filter(vote => {
+        if (attribute && vote.attribute.indexOf(attribute) == -1) return false;
+        return true;
+        });
+      }
+      else {
+        console.log('ERROR:no match vlaue');
+      }//end 多条件查询
       let total = mockVotes.length;
       mockVotes = mockVotes.filter((u, index) => index < 20 * page && index >= 20 * (page - 1));
       return new Promise((resolve, reject) => {

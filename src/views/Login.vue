@@ -22,6 +22,7 @@
 
 <script>
   import { requestLogin } from '../api/api';
+  import axios from 'axios';
   //import NProgress from 'nprogress'
   export default {
     data() {
@@ -63,7 +64,9 @@
             //NProgress.start();
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
             //  var loginParams = { phone: '15647854635', passwd: '123456' };
-            requestLogin(loginParams).then(data => {//请求验证账号密码
+
+
+             requestLogin(loginParams).then(data => {//请求验证账号密码
               this.logining = false;
               //NProgress.done()
               let { msg, code, user } = data;//后端返回的code为200验证通过

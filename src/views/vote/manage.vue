@@ -4,7 +4,12 @@
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
 			<el-form :inline="true" :model="filters">
 				<el-form-item>
-					<el-input v-model="filters.name" placeholder="某建筑名称下的所有投票"></el-input>
+					<el-input v-model="filters.name" placeholder="搜索关键词"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-select v-model="value" placeholder="查询关键词">
+						<el-option v-for="item in options" :key="item.value"  :label="item.label" :value="item.value"></el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" v-on:click="getVotes">查询</el-button>
@@ -132,6 +137,16 @@
 				filters: {
 					name: ''
 				},
+				//多条件查询参数
+				options:[{
+					value:'name',
+					label:"投票名称"
+				},{
+					value:"attribute",
+					label:"发起组织"
+				}],
+				value:'name',
+				//end 多条件查询参数
 				votes: [],
 				total: 0,
 				page: 1,
@@ -198,7 +213,8 @@
 			getVotes() {
 				let para = {
 					page: this.page,
-					attribute: this.filters.name
+					attribute: this.filters.name,
+					value:this.value
 				};
 				this.listLoading = true;
 				//NProgress.start();
@@ -265,6 +281,7 @@
 			},
 			getVotesNone:function(){
 			this.filters.name='';
+			this.value='name';
 			this.getVotes();
 			},
 			//新增

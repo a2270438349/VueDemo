@@ -14,13 +14,13 @@ for (let i = 0; i < 86; i++) {
   Users.push(Mock.mock({
     id: Mock.Random.guid(),
     name: Mock.Random.cname(),
-    sex: Mock.Random.integer(0, 1),
-    phone:'电话号码',
-    email:'邮件地址',
-    photo:'图片url',
+    sex: ''+Mock.Random.integer(0, 1),
+    phone:''+Mock.Random.integer(10000000000,19999999999),
+    email:Mock.Random.integer(1000000,9999999)+'@vue.com',
+    photo:'图片url-'+i,
     addr: Mock.mock('@county(true)'),
-    regdate:Mock.Random.date(),
-    available:Mock.Random.integer(0,1)
+    regdate:''+Mock.Random.date(),
+    available:''+Mock.Random.integer(0,1)
     // num:Mock.Random.integer(0, 1000)+"-"+Mock.Random.integer(0, 1000)+"-"+Mock.Random.integer(0, 10000)
   }));
 }
