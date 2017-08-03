@@ -34,10 +34,10 @@
 			</el-table-column>
 			<el-table-column prop="phone" label="电话" width="100" sortable>
 			</el-table-column>
-			<el-table-column prop="email" label="电子邮件" width="120" sortable>
+			<el-table-column prop="email" label="电子邮件" width="180" sortable>
 			</el-table-column>
-			<el-table-column prop="photo" label="头像" width="120" sortable>
-			</el-table-column>
+			<!-- <el-table-column prop="photo" label="头像" width="120" sortable>
+			</el-table-column> -->
 			<el-table-column prop="addr" label="地址" min-width="120" sortable>
 			</el-table-column>
 			<el-table-column prop="regdate" label="注册日期" min-width="120" sortable>

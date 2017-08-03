@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import Mock from 'mockjs';
 import { LoginUsers, Users } from './data/user';
 import {Buildings} from './data/building';
 import {Committees} from './data/committee';
@@ -266,6 +267,7 @@ export default {
     mock.onGet('/user/add').reply(config => {
       let { name, addr, age, birth, sex } = config.params;
       _Users.push({
+        id:Mock.Random.guid(),
         name: name,
         addr: addr,
         age: age,
@@ -474,6 +476,7 @@ export default {
     mock.onGet('/building/buildingadd').reply(config => {
       let {  building_name, layers, undergroup_layers, units_num, building_date,city,district,address,available } = config.params;
       _Buildings.push({
+        building_id:Mock.Random.guid(),
         building_name:building_name,
         layers: layers,
         undergroup_layers: undergroup_layers,
@@ -704,9 +707,9 @@ export default {
 
     //新增委员会
     mock.onGet('/committee/committeeadd').reply(config => {
-      let {   id,name, type, pid, flag, leader,detail,available} = config.params;
+      let { name, type, pid, flag, leader,detail,available} = config.params;
       _Committees.push({
-        id:id,
+        id:Mock.Random.guid(),
         name: name,
         type: type,
         pid: pid,
@@ -833,9 +836,9 @@ export default {
 
     //新增投票
     mock.onGet('/vote/voteadd').reply(config => {
-      let {   id, name, deadline1, deadline2, attribute, vote} = config.params;
+      let {    name, deadline1, deadline2, attribute, vote} = config.params;
       _Votes.push({
-        id:id,
+        id:Mock.Random.guid(),
         name: name,
         deadline1: deadline1,
         deadline2: deadline2,
@@ -846,10 +849,12 @@ export default {
         setTimeout(() => {
           resolve([200, {
             code: 200,
-            msg: '新增成功'
+            msg: '新增成功',
+            
           }]);
         }, 500);
       });
+      
     });
 
 

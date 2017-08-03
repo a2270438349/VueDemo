@@ -17,7 +17,7 @@
 			  <el-input type="text" placeholder="请输入楼宇编号" v-model="LVForm.attribute"></el-input>
 			</el-form-item>
       <!--投票设置框-->
-      <el-form-item v-for="i in questions" :key="i">   
+      <!-- <el-form-item v-for="i in questions" :key="i"> -->
       <!-- mock.js中模拟的数据可以有冗余项，只要选取需要的数据显示出来就行了 -->
       <el-form-item>
       <el-card class="box-card" style="width:100%" body-style  >
@@ -25,14 +25,14 @@
             <span style="line-height: 36px;">投票项{{i}}</span>
             <el-button style="float: right;" type="primary" @click="handleFold">{{String_handleFold}}</el-button>
           </div>
-          <el-form-item  v-show="willshow" prop="vote[i].title">
+          <el-form-item  v-show="willshow" prop="vote.title">
             <a>标题：</a>
-            <el-input type="text" style="width:100%" v-model="LVForm.vote[i].title" auto-complete="off" placeholder="投票标题"></el-input>
-            <el-radio class="radio" v-model="LVForm.vote[i].radio" label="0">单选</el-radio>
-            <el-radio class="radio" v-model="LVForm.vote[i].radio" label="1">多选</el-radio>
+            <el-input type="text" style="width:100%" v-model="LVForm.vote.title" auto-complete="off" placeholder="投票标题"></el-input>
+            <el-radio class="radio" v-model="LVForm.vote.radio" label="0">单选</el-radio>
+            <el-radio class="radio" v-model="LVForm.vote.radio" label="1">多选</el-radio>
           </el-form-item>
-          <el-form-item prop="vote[i].item[o]" v-for="o in LVForm.vote[i].num" :key="o" class="text item"  v-show="willshow" >{{'选项'+o+'：'}}
-            <el-input  type="textarea"  style="width:100%" v-model="LVForm.vote[i].item[o]" auto-complete="off" placeholder="选项内容"></el-input>
+          <el-form-item prop="vote.item[o]" v-for="o in LVForm.vote.num" :key="o" class="text item"  v-show="willshow" >{{'选项'+o+'：'}}
+            <el-input  type="textarea"  style="width:100%" v-model="LVForm.vote.item[o]" auto-complete="off" placeholder="选项内容"></el-input>
             <!-- <el-button type="primary" style="float:right;">上传图片</el-button> -->
              <el-upload
               class="upload-demo"
@@ -40,21 +40,20 @@
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               :file-list="fileList"
-              name="this.LVForm.vote[i].identifier">
+              name="this.LVForm.vote.identifier">
               <el-button size="small" >上传图片</el-button>
               <a slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</a> 
             </el-upload>   
-            <a href=JavaScript:void(0) v-if="o==LVForm.vote[i].num" @click="handleDelete" style="float:right">删除选项</a>
+            <a href=JavaScript:void(0) v-if="o==LVForm.vote.num" @click="handleDelete" style="float:right">删除选项</a>
           </el-form-item>
           <el-form-item>
             <el-button style="width:100%" @click="handleAdd" v-show="willshow" >添加选项</el-button>
           </el-form-item>
       </el-card>
       </el-form-item> 
-      </el-form-item>
       <el-form-item>
-         <el-button type=""  style='width:49%'  @click='handleAddQuestions'>添加投票项</el-button> 
-         <el-button type=""  style="width:49%"  @click='handleDeleteQuestions'>删除投票项</el-button> 
+        <!-- <el-button type=""  style='width:49%'  @click='handleAddQuestions'>添加投票项</el-button> -->
+        <!-- <el-button type=""  style="width:49%"  @click='handleDeleteQuestions'>删除投票项</el-button> -->
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style='width:100%' @click='handleLaunchVote'  >发布</el-button>
@@ -80,12 +79,12 @@
           deadline1:'',
           deadline2:'',
           attribute:'',//投票用户是哪个楼宇的
-          vote:[{
+          vote:{
             title:'',//投票标题
             radio:0,
             num:2,//选项的总数
             item:[]//每个投票选项的值
-          },]
+          }
         },
         LVFormRules: {
 					name: [
@@ -107,14 +106,14 @@
         }
       },
       handleDelete:function(){
-        // if(this.LVForm.vote[i].num<=1){
-        //   this.$message('请确保至少有一项选项');
+        if(this.LVForm.vote.num<=1){
+          this.$message('请确保至少有一项选项');
           
-        // }
-        // else this.LVForm.vote[i].num-=1;
+        }
+        else this.LVForm.vote.num-=1;
       },
       handleAdd:function(){
-        // this.LVForm.vote[i].num+=1;
+        this.LVForm.vote.num+=1;
       },
       handleRemove:function(file, fileList) {
         console.log(file, fileList);
