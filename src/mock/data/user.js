@@ -10,6 +10,7 @@ const LoginUsers = [
 ];
 
 const Users = [];
+// let strings=[];
 for (let i = 0; i < 86; i++) {
   Users.push(Mock.mock({
     id: Mock.Random.guid(),
@@ -19,6 +20,10 @@ for (let i = 0; i < 86; i++) {
     email:Mock.Random.integer(1000000,9999999)+'@vue.com',
     photo:'图片url-'+i,
     addr: Mock.mock('@county(true)'),
+    // strings:addr.split(' '),
+    // prov:strings[1],
+    // city:strings[2],
+    // district:strings[3],
     regdate:''+Mock.Random.date(),
     available:''+Mock.Random.integer(0,1)
     // num:Mock.Random.integer(0, 1000)+"-"+Mock.Random.integer(0, 1000)+"-"+Mock.Random.integer(0, 10000)

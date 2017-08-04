@@ -1,4 +1,18 @@
 import Mock from 'mockjs';
+const voteExample={
+  id:Mock.Random.guid(),
+  name:'荔园大厦整修承包商投票',
+  deadline1:'2017-09-01',
+  deadline2:'2017-10-01',
+  attribute:'荔园大厦-业主',
+  vote:{
+    title:'方案投票',
+    radio:0,
+    num:5,
+    item:['某铁一局','某铁二局','某铁三局','某铁四局','某铁八局'],//投票项
+    voteNum:[100,200,300,250,500]//每个投票项投票数
+  }
+};
 const Votes = [];
 for (let i = 0; i < 86; i++) {
   Votes.push(Mock.mock({
@@ -17,4 +31,4 @@ for (let i = 0; i < 86; i++) {
   }));
 }
 
-export {  Votes };
+export {  Votes,voteExample };

@@ -13,6 +13,7 @@ import buildingManege from './views/Building/buildingManage.vue'
 import buildingList from './views/Building/buildingList.vue'
 import committeeManage from './views/committee/committeeManage.vue'
 import committeeList from './views/committee/committeeList.vue'
+import myVote from './views/vote/myVote'
 
 let routes = [
     {
@@ -51,6 +52,7 @@ let routes = [
                     {path:'/manage/launchVote_mine',component:launchVote_mine,iconCls: 'el-icon-menu',name:'我的投票'}
                 ]
             },
+            {path:'/myVote',component:myVote,name:'等待投票'},
             { path: '/voteList', component: voteList, name: '投票列表' },
             {path:'/analyze',component:analyze,name:'结果分析'},
         ]

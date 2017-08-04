@@ -165,7 +165,7 @@
 			</el-form>
 				
 			<div slot="footer" class="dialog-footer">
-				<el-button @click.native="addFormVisible = false">取消</el-button>  
+				<el-button @click.native="addFormVisible = false">取消</el-button>
 				<el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
 			</div>
 		</el-dialog>
@@ -185,12 +185,12 @@
 					name: ''
 				},
 				//省市区三级选择器参数
-        		arr :arrAll,
-				prov: '',
-		    	city: '',
-				district: '',
+				prov: '请选择',
+		    	city: '请选择',
+		    	district: '请选择',
 		   		cityArr: [],
         		districtArr: [],
+        		arr :arrAll,
 				//多条件查询参数
 				options:[{
 					value:'name',
@@ -322,15 +322,19 @@
 			//显示编辑界面
 			handleEdit: function (index, row) {
 				this.editFormVisible = true;
+				//初始化省市区三级参数
+				this.prov='请选择';
+				this.city='请选择';
+				this.district='请选择';
 				this.editForm = Object.assign({}, row);
-				this.prov=this.editForm.addr.split(' ')[0];
-				this.city=this.editForm.addr.split(' ')[1];
-				this.district=this.editForm.addr.split(' ')[2];
-				if(this.district=='-') this.district=''
 			},
 			//显示新增界面
 			handleAdd: function () {
 				this.addFormVisible = true;
+				//初始化省市区三级参数
+				this.prov='请选择';
+				this.city='请选择';
+				this.district='请选择';
 				this.addForm = {
 					name: '',
 					sex: -1,
@@ -341,10 +345,6 @@
 					regdate:'',
 					available:''+1
 				};
-
-					this.prov='';
-					this.city='';
-					this.district='';
 			},
 			//编辑
 			editSubmit: function () {
@@ -367,9 +367,6 @@
 								this.$refs['editForm'].resetFields();
 								this.editFormVisible = false;
 								this.getUsers();
-								this.prov='',
-		    					this.city= '',
-								this.district= ''
 							});
 						});
 					}
@@ -396,9 +393,6 @@
 								this.$refs['addForm'].resetFields();
 								this.addFormVisible = false;
 								this.getUsers();
-								this.prov='',
-		    					this.city= '',
-								this.district= ''
 							});
 						});
 					}
@@ -460,23 +454,15 @@
 		},
 		//省市区三级选择器方法
 		beforeMount: function () {
-			
 		this.updateCity();
 		this.updateDistrict();
 		},
 		watch: {
 		prov: function () {
-			for(i in 3){
-				
-			}
 			this.updateCity();
-				this.updateDistrict();
+			this.updateDistrict();
 		},
 		city: function () {
-			// this.updateDistrict();
-			for(i in 3){
-				
-			}
 			this.updateDistrict();
 		}
 		}

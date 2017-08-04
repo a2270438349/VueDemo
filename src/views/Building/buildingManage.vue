@@ -41,9 +41,11 @@
 			</el-table-column>
 			<el-table-column prop="building_date" label="建筑日期" width="120" sortable>
 			</el-table-column>
-			<el-table-column prop="city" label="城市" width="130" sortable>
+			<!-- <el-table-column prop="city" label="城市" width="130" sortable>
 			</el-table-column>
             <el-table-column prop="district" label="地区" width="130" sortable>
+			</el-table-column>  -->
+			<el-table-column prop="district" label="地区" width="130" sortable>
 			</el-table-column>
             <el-table-column prop="address" label="详细地址" min-width="130" sortable>
 			</el-table-column>
@@ -82,19 +84,33 @@
 				<el-form-item label="建筑日期">
 					<el-date-picker type="date" placeholder="选择日期" v-model="editForm.building_date"></el-date-picker>
 				</el-form-item>
-				<el-form-item label="城市" prop="city">
+				<!-- <el-form-item label="城市" prop="city">
 					<el-input v-model="editForm.city" auto-complete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="地区" prop="district">
 					<el-input v-model="editForm.district" auto-complete="off"></el-input>
+				</el-form-item> -->
+				<el-form-item label="地区" prop="district">
+					<!-- <el-input type='textarea' v-model="editForm.address" ></el-input> -->
+					<!--省市区三级选择器  -->
+						<el-select v-model="prov">
+							<el-option v-for="option in arr" :label="option.name" :value="option.name" :key="option.name"></el-option>
+						</el-select>
+						<el-select v-model="city">
+							<el-option v-for="option in cityArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
+						</el-select>
+						<el-select v-model="district" v-if="district">
+							<el-option v-for="option in districtArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
+						</el-select>
+					<!--end 省市区三级选择器  -->
 				</el-form-item>
 				<el-form-item label="详细地址">
 					<el-input type="textarea" v-model="editForm.address"></el-input>
 				</el-form-item>
 				<el-form-item label="可用性">
 					<el-radio-group v-model="editForm.available">
-						<el-radio class="radio" :label="1">是</el-radio>
-						<el-radio class="radio" :label="0">否</el-radio>
+						<el-radio class="radio" :label="''+1">是</el-radio>
+						<el-radio class="radio" :label="''+0">否</el-radio>
 					</el-radio-group>
 				</el-form-item>
 			</el-form>
@@ -122,11 +138,25 @@
 				<el-form-item label="建筑日期">
 					<el-date-picker type="date" placeholder="选择日期" v-model="addForm.building_date"></el-date-picker>
 				</el-form-item>
-				<el-form-item label="城市" prop="city">
+				<!-- <el-form-item label="城市" prop="city">
 					<el-input v-model="addForm.city" auto-complete="off"></el-input>
 				</el-form-item>
 				<el-form-item label="地区" prop="district">
 					<el-input v-model="addForm.district" auto-complete="off"></el-input>
+				</el-form-item> -->
+				<el-form-item label="地区" prop="district">
+					<!-- <el-input type='textarea' v-model="editForm.address" ></el-input> -->
+					<!--省市区三级选择器  -->
+						<el-select v-model="prov">
+							<el-option v-for="option in arr" :label="option.name" :value="option.name" :key="option.name"></el-option>
+						</el-select>
+						<el-select v-model="city">
+							<el-option v-for="option in cityArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
+						</el-select>
+						<el-select v-model="district" v-if="district">
+							<el-option v-for="option in districtArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
+						</el-select>
+					<!--end 省市区三级选择器  -->
 				</el-form-item>
 				<el-form-item label="详细地址">
 					<el-input type="textarea" v-model="addForm.address"></el-input>
@@ -139,7 +169,7 @@
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
-				<el-button @click.native="editFormVisible = false">取消</el-button>
+				<el-button @click.native="addFormVisible = false">取消</el-button>
 				<el-button type="primary" @click.native="addSubmit" :loading="editLoading">提交</el-button>
 			</div>
 		</el-dialog>
@@ -150,7 +180,7 @@
 	import util from '../../common/js/util'
 	//import NProgress from 'nprogress'
 	import { getBuildingListPage,batchRemoveBuilding,getBuildingList,removeBuilding, editBuilding,addBuilding,getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
-
+	import { arrAll} from '../../common/js/districtSelect';
 	export default {
 		data() {
 			return {
@@ -198,7 +228,7 @@
 					undergroup_layers:0,
 					units_num:0,
 					building_date:'',
-					city:'',
+					// city:'',
 					district:'',
 					address:'',
 					available:1
@@ -219,11 +249,18 @@
 					undergroup_layers:0,
 					units_num:0,
 					building_date:'',
-					city:'',
+					// city:'',
 					district:'',
 					address:'',
 					available:1
-				}
+				},
+				//省市区三级选择器参数
+				prov: '',
+		    	city: '',
+		    	district: '',
+		   		cityArr: [],
+        		districtArr: [],
+        		arr :arrAll,
 
 			}
 		},
@@ -282,6 +319,10 @@
 			handleEdit: function (index, row) {
 				this.editFormVisible = true;
 				this.editForm = Object.assign({}, row);
+				this.prov=this.editForm.district.split(' ')[0];
+				this.city=this.editForm.district.split(' ')[1];
+				this.district=this.editForm.district.split(' ')[2];
+				if(this.district=='-') this.district=''
 			},
 			//显示新增界面
 			handleAdd: function () {
@@ -293,11 +334,15 @@
 					undergroup_layers:0,
 					units_num:0,
 					building_date:'',
-					city:'',
+					// city:'',
 					district:'',
 					address:'',
 					available:1
 				};
+				
+					this.prov='',
+					this.city='',
+					this.district=''
 			},
 			//编辑
 			editSubmit: function () {
@@ -308,6 +353,7 @@
 							//NProgress.start();
 							let para = Object.assign({}, this.editForm);
 							para.building_date = (!para.building_date || para.building_date == '') ? '' : util.formatDate.format(new Date(para.building_date), 'yyyy-MM-dd');
+							para.district=this.prov+' '+this.city+' '+this.district;
 							editBuilding(para).then((res) => {
 								this.editLoading = false;
 								//NProgress.done();
@@ -332,6 +378,7 @@
 							//NProgress.start();
 							let para = Object.assign({}, this.addForm);
 							para.building_date = (!para.building_date || para.building_date == '') ? '' : util.formatDate.format(new Date(para.building_date), 'yyyy-MM-dd');
+							para.district=this.prov+' '+this.city+' '+this.district;
 							addBuilding(para).then((res) => {
 								this.addLoading = false;
 								//NProgress.done();
@@ -371,10 +418,51 @@
 				}).catch(() => {
 
 				});
+			},
+			//省市区三级选择器调用方法
+			updateCity: function () {
+			for (var i in this.arr) {
+				var obj = this.arr[i];
+				if (obj.name == this.prov) {
+					this.cityArr = obj.sub;
+					break;
+				}
+			}
+			this.city = this.cityArr[1].name;
+			},
+			updateDistrict: function () {
+			for (var i in this.cityArr) {
+				var obj = this.cityArr[i];
+				if (obj.name == this.city) {
+					this.districtArr = obj.sub;
+					break;
+				}
+			}
+			if(this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
+				this.district = this.districtArr[1].name;
+			} else {
+				this.district = '';
+			}
 			}
 		},
 		mounted() {
 			this.getBuildings();
+		},
+		//省市区三级选择器方法
+		beforeMount: function () {
+			this.updateCity();
+			this.updateDistrict();
+		},
+		watch: {
+		prov: function () {
+			this.updateCity();
+				this.updateDistrict();
+		},
+		city: function () {
+			// this.updateDistrict();
+			
+			this.updateDistrict();
+		}
 		}
 	}
 

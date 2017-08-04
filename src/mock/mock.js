@@ -242,14 +242,18 @@ export default {
 
     //编辑用户
     mock.onGet('/user/edit').reply(config => {
-      let { id, name, addr, age, birth, sex } = config.params;
+      let { id, name, sex,phone,email,photo, addr, regdate, available } = config.params;
       _Users.some(u => {
         if (u.id === id) {
           u.name = name;
-          u.addr = addr;
-          u.age = age;
-          u.birth = birth;
           u.sex = sex;
+          u.phone=phone;
+          u.addr = addr;
+          u.email = email;
+          u.photo = photo;
+          u.addr = addr;
+          u.regdate = regdate;
+          u.available = available;
           return true;
         }
       });
@@ -265,14 +269,17 @@ export default {
 
     //新增用户
     mock.onGet('/user/add').reply(config => {
-      let { name, addr, age, birth, sex } = config.params;
+      let {name, sex,phone,email,photo, addr, regdate, available } = config.params;
       _Users.push({
         id:Mock.Random.guid(),
         name: name,
+        sex: sex,
+        phone: phone,
+        email: email,
+        photo: photo,
         addr: addr,
-        age: age,
-        birth: birth,
-        sex: sex
+        regdate: regdate,
+        available: available,
       });
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -455,7 +462,7 @@ export default {
           u.undergroup_layers = undergroup_layers;
           u.units_num = units_num;
           u.building_date = building_date;
-          u.city=city;
+          // u.city=city;
           u.district=district;
           u.address=address;
           u.available=available;
@@ -482,7 +489,7 @@ export default {
         undergroup_layers: undergroup_layers,
         units_num: units_num,
         building_date: building_date,
-        city:city,
+        // city:city,
         district:district,
         address:address,
         available:available

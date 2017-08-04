@@ -68,14 +68,14 @@
 				</el-form-item>
 				<el-form-item label="组织类型">
                     <el-radio-group v-model="editForm.type">
-						<el-radio class="radio" :label="0">政府</el-radio>
-						<el-radio class="radio" :label="1">业主立案团</el-radio>
-						<el-radio class="radio" :label="2">业主委员会</el-radio>
-                        <el-radio class="radio" :label="3">互助委员会</el-radio>
-                        <el-radio class="radio" :label="4">物业管理公司</el-radio>
-                        <el-radio class="radio" :label="5">其他</el-radio>
-                        <el-radio class="radio" :label="6">无组织</el-radio>
-                        <el-radio class="radio" :label="7">小组</el-radio>
+						<el-radio class="radio" :label="''+0">政府</el-radio>
+						<el-radio class="radio" :label="''+1">业主立案团</el-radio>
+						<el-radio class="radio" :label="''+2">业主委员会</el-radio>
+                        <el-radio class="radio" :label="''+3">互助委员会</el-radio>
+                        <el-radio class="radio" :label="''+4">物业管理公司</el-radio>
+                        <el-radio class="radio" :label="''+5">其他</el-radio>
+                        <el-radio class="radio" :label="''+6">无组织</el-radio>
+                        <el-radio class="radio" :label="''+7">小组</el-radio>
 					</el-radio-group>
                 </el-form-item>
 				<el-form-item label="父级组织">
@@ -83,21 +83,21 @@
 				</el-form-item>
 				<el-form-item label="标记">
 					<el-radio-group v-model="editForm.flag">
-						<el-radio class="radio" :label='0'>政府</el-radio>
-						<el-radio class="radio" :label='1'>居委会</el-radio>
-						<el-radio class="radio" :label='2'>小组</el-radio>
+						<el-radio class="radio" :label="''+0">政府</el-radio>
+						<el-radio class="radio" :label="''+1">居委会</el-radio>
+						<el-radio class="radio" :label="''+2">小组</el-radio>
 					</el-radio-group>
 				</el-form-item>
                 <el-form-item label="主要领导" >
 					<el-input v-model="editForm.leader" ></el-input>
 				</el-form-item>
                 <el-form-item label="简介" >
-					<el-input v-model="editForm.detail" ></el-input>
+					<el-input type="textarea" v-model="editForm.detail" ></el-input>
 				</el-form-item>
 				<el-form-item label="可用性">
 					<el-radio-group v-model="editForm.available">
-						<el-radio class="radio" :label="1">是</el-radio>
-						<el-radio class="radio" :label="0">否</el-radio>
+						<el-radio class="radio" :label="''+1">是</el-radio>
+						<el-radio class="radio" :label="''+0">否</el-radio>
 					</el-radio-group>
 				</el-form-item>
 			</el-form>
@@ -116,14 +116,14 @@
 				</el-form-item>
 				<el-form-item label="组织类型">
                     <el-radio-group v-model="addForm.type">
-						<el-radio class="radio" :label="0">政府</el-radio>
-						<el-radio class="radio" :label="1">业主立案团</el-radio>
-						<el-radio class="radio" :label="2">业主委员会</el-radio>
-                        <el-radio class="radio" :label="3">互助委员会</el-radio>
-                        <el-radio class="radio" :label="4">物业管理公司</el-radio>
-                        <el-radio class="radio" :label="5">其他</el-radio>
-                        <el-radio class="radio" :label="6">无组织</el-radio>
-                        <el-radio class="radio" :label="7">小组</el-radio>
+						<el-radio class="radio" :label="''+0">政府</el-radio>
+						<el-radio class="radio" :label="''+1">业主立案团</el-radio>
+						<el-radio class="radio" :label="''+2">业主委员会</el-radio>
+                        <el-radio class="radio" :label="''+3">互助委员会</el-radio>
+                        <el-radio class="radio" :label="''+4">物业管理公司</el-radio>
+                        <el-radio class="radio" :label="''+5">其他</el-radio>
+                        <el-radio class="radio" :label="''+6">无组织</el-radio>
+                        <el-radio class="radio" :label="''+7">小组</el-radio>
 					</el-radio-group>
                 </el-form-item>
 				<el-form-item label="父级组织">
@@ -131,9 +131,9 @@
 				</el-form-item>
 				<el-form-item label="标记">
 					<el-radio-group v-model="addForm.flag">
-						<el-radio class="radio" :label='0'>政府</el-radio>
-						<el-radio class="radio" :label='1'>居委会</el-radio>
-						<el-radio class="radio" :label='2'>小组</el-radio>
+						<el-radio class="radio" :label="''+0">政府</el-radio>
+						<el-radio class="radio" :label="''+1">居委会</el-radio>
+						<el-radio class="radio" :label="''+2">小组</el-radio>
 					</el-radio-group>
 				</el-form-item>
                 <el-form-item label="主要领导" >
@@ -144,8 +144,8 @@
 				</el-form-item>
 				<el-form-item label="可用性">
 					<el-radio-group v-model="addForm.available">
-						<el-radio class="radio" :label="1">是</el-radio>
-						<el-radio class="radio" :label="0">否</el-radio>
+						<el-radio class="radio" :label="''+1">是</el-radio>
+						<el-radio class="radio" :label="''+0">否</el-radio>
 					</el-radio-group>
 				</el-form-item>
 			</el-form>
