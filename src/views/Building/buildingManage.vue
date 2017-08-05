@@ -99,7 +99,7 @@
 						<el-select v-model="city">
 							<el-option v-for="option in cityArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
 						</el-select>
-						<el-select v-model="district" v-if="district">
+						<el-select v-model="district" v-if="district!='-'">
 							<el-option v-for="option in districtArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
 						</el-select>
 					<!--end 省市区三级选择器  -->
@@ -153,7 +153,7 @@
 						<el-select v-model="city">
 							<el-option v-for="option in cityArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
 						</el-select>
-						<el-select v-model="district" v-if="district">
+						<el-select v-model="district" >
 							<el-option v-for="option in districtArr" :label="option.name" :value="option.name" :key="option.name"></el-option>
 						</el-select>
 					<!--end 省市区三级选择器  -->
@@ -322,7 +322,6 @@
 				this.prov=this.editForm.district.split(' ')[0];
 				this.city=this.editForm.district.split(' ')[1];
 				this.district=this.editForm.district.split(' ')[2];
-				if(this.district=='-') this.district=''
 			},
 			//显示新增界面
 			handleAdd: function () {
@@ -428,7 +427,7 @@
 					break;
 				}
 			}
-			this.city = this.cityArr[1].name;
+			// this.city = this.cityArr[1].name;
 			},
 			updateDistrict: function () {
 			for (var i in this.cityArr) {
@@ -438,11 +437,11 @@
 					break;
 				}
 			}
-			if(this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
-				this.district = this.districtArr[1].name;
-			} else {
-				this.district = '';
-			}
+			// if(this.districtArr && this.districtArr.length > 0 && this.districtArr[1].name) {
+			// 	this.district = this.districtArr[1].name;
+			// } else {
+			// 	this.district = '';
+			// }
 			}
 		},
 		mounted() {
@@ -456,7 +455,7 @@
 		watch: {
 		prov: function () {
 			this.updateCity();
-				this.updateDistrict();
+				// this.updateDistrict();
 		},
 		city: function () {
 			// this.updateDistrict();
